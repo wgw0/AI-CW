@@ -1,46 +1,67 @@
-# Definition of the OR_perceptron function with two inputs: x1 and x2.
-def OR_perceptron(x1, x2):
-    # Initializing weights w1 and w2 to 1. These weights are applied to the inputs.
-    w1 = 1
-    w2 = 1
-    # Setting the threshold (theta) value to 1. This is used to decide the output of the perceptron.
-    theta = 1
-    # Calculating the weighted sum of the inputs.
-    yin = (x1 * w1) + (x2 * w2)
-    # If the weighted sum is equal or greater than the threshold, return 1 (True).
-    if yin >= theta:
-        return 1
-    # Otherwise, return 0 (False).
-    else:
-        return 0
+import numpy as np
+import matplotlib.pyplot as plt
 
-# Testing the OR_perceptron function with different sets of inputs.
-print("OR Perceptron")
-print(OR_perceptron(0, 0))  # Output for inputs (0, 0)
-print(OR_perceptron(0, 1))  # Output for inputs (0, 1)
-print(OR_perceptron(1, 0))  # Output for inputs (1, 0)
-print(OR_perceptron(1, 1))  # Output for inputs (1, 1)
-print("----------------------------------")
+# Data for OR operation with all possible input combinations and their corresponding outputs.
+or_data = {
+    (0, 0): 0,
+    (0, 1): 1,
+    (1, 0): 1,
+    (1, 1): 1
+}
 
-# Definition of the XOR_perceptron function with two inputs: x1 and x2.
-def XOR_perceptron(x1, x2):
-    # Initializing weights w1 to 1 and w2 to -1. These weights are applied to the inputs.
-    w1 = 1
-    w2 = -1
-    # Setting the threshold (theta) value to 0. This is used to decide the output of the perceptron.
-    theta = 0
-    # Calculating the weighted sum of the inputs.
-    yin = (x1 * w1) + (x2 * w2)
-    # If the weighted sum is equal or greater than the threshold, return 1 (True).
-    if yin >= theta:
-        return 1
-    # Otherwise, return 0 (False).
-    else:
-        return 0
+# Data for XOR operation with all possible input combinations and their corresponding outputs.
+xor_data = {
+    (0, 0): 0,
+    (0, 1): 1,
+    (1, 0): 1,
+    (1, 1): 0
+}
 
-# Testing the XOR_perceptron function with different sets of inputs.
-print("XOR Perceptron")
-print(XOR_perceptron(0, 0))  # Output for inputs (0, 0)
-print(XOR_perceptron(0, 1))  # Output for inputs (0, 1)
-print(XOR_perceptron(1, 0))  # Output for inputs (1, 0)
-print(XOR_perceptron(1, 1))  # Output for inputs (1, 1)
+# Definition of the unit step function, which is the activation function for the perceptron.
+def unit_step(v):
+    return 1 if v >= 0 else 0
+
+# General perceptron function that computes the weighted sum and applies the activation function.
+def perceptron(theta, x, w, b):
+    result = np.dot(w, x) + b  # Weighted sum of inputs and bias
+    return theta(result)      # Apply activation function
+
+# Specific implementation of a perceptron for the OR operation.
+def or_perceptron(x):
+    return perceptron(
+        unit_step,           # Activation function
+        x,                   # Input vector
+        np.array([1, 1]),    # Weights
+        -1                   # Bias
+    )
+
+# Plotting the OR function
+plt.scatter([0, 1, 1], [1, 0, 1], label='One', s=[10, 10, 10])  # Plot points for output 1
+plt.scatter([0], [0], label='Zero', s=[10])                      # Plot point for output 0
+plt.plot([0, 0.9], [0.9, 0], label='Linear separator')           # Plot linear separator
+
+# Setting layout options for OR plot
+plt.xticks(range(2))
+plt.yticks(range(2))
+plt.xlabel('Input 1')
+plt.ylabel('Input 2')
+plt.title('Output of the Or function over 2 inputs')
+plt.legend()
+plt.grid(True)
+
+plt.show()  # Display OR plot
+
+# Plotting the XOR function
+plt.scatter([0, 1], [1, 0], label='One', s=[10, 10])  # Plot points for output 1
+plt.scatter([0, 1], [0, 1], label='Zero', s=[10, 10]) # Plot points for output 0
+
+# Setting layout options for XOR plot
+plt.xticks(range(2))
+plt.yticks(range(2))
+plt.xlabel('Input 1')
+plt.ylabel('Input 2')
+plt.title('Output of the XOR function over 2 inputs')
+plt.legend()
+plt.grid(True)
+
+plt.show()  # Display XOR plot
