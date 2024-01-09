@@ -1,47 +1,62 @@
+#!/usr/bin/env python3
+
 import numpy as np
+import matplotlib.pyplot as plt
 
-# Define the Perceptron class
-class Perceptron:
-    def __init__(self, no_of_inputs, threshold=100, learning_rate=0.01):
-        self.threshold = threshold
-        self.learning_rate = learning_rate
-        self.weights = np.zeros(no_of_inputs + 1)
-           
-    def predict(self, inputs):
-        summation = np.dot(inputs, self.weights[1:]) + self.weights[0]
-        return 1 if summation > 0 else 0
+or_data = {
+    (0, 0): 0,
+    (0, 1): 1,
+    (1, 0): 1,
+    (1, 1): 1
+}
 
-    def train(self, training_inputs, labels):
-        for _ in range(self.threshold):
-            for inputs, label in zip(training_inputs, labels):
-                prediction = self.predict(inputs)
-                self.weights[1:] += self.learning_rate * (label - prediction) * inputs
-                self.weights[0] += self.learning_rate * (label - prediction)
+xor_data = {
+    (0, 0): 0,
+    (0, 1): 1,
+    (1, 0): 1,
+    (1, 1): 0
+}
 
+def unit_step(v):
+    return 1 if v >= 0 else 0
 
-# Define training data for the OR problem
-training_inputs_or = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
-labels_or = np.array([0, 1, 1, 1])
+def perceptron(theta, x, w, b):
+    result = np.dot(w, x) + b
+    return theta(result)
 
-# Create a perceptron instance for the OR problem
-perceptron_or = Perceptron(2)
-perceptron_or.train(training_inputs_or, labels_or)
+def or_perceptron(x):
+    return perceptron(
+        unit_step,
+        x,
+        np.array([1, 1]),
+        -1
+    )
 
-# Testing the OR problem solution
-print("Testing OR problem:")
-for i in range(len(training_inputs_or)):
-    print(f"Input: {training_inputs_or[i]}, Predicted Output: {perceptron_or.predict(training_inputs_or[i])}")
+# Plotting markers and lines
+plt.scatter([0, 1, 1], [1, 0, 1], label='One', s=[10, 10, 10])
+plt.scatter([0], [0], label='Zero', s=[10])
+plt.plot([0, 0.9], [0.9, 0], label='Linear separator')
 
-# Define training data for the XOR problem
-training_inputs_xor = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
-labels_xor = np.array([0, 1, 1, 0])
+# Setting layout options
+plt.xticks(range(2))
+plt.yticks(range(2))
+plt.xlabel('Input 1')
+plt.ylabel('Input 2')
+plt.title('Output of the Or function over 2 inputs')
+plt.legend()
+plt.grid(True)
 
-# Create a perceptron instance for the XOR problem
-perceptron_xor = Perceptron(2)
-perceptron_xor.train(training_inputs_xor, labels_xor)
+plt.show()
 
-# Testing the inability to solve the XOR problem
-print("\nTesting XOR problem:")
-for i in range(len(training_inputs_xor)):
-    print(f"Input: {training_inputs_xor[i]}, Predicted Output: {perceptron_xor.predict(training_inputs_xor[i])}")
+plt.scatter([0, 1], [1, 0], label='One', s=[10, 10])
+plt.scatter([0, 1], [0, 1], label='Zero', s=[10, 10])
 
+plt.xticks(range(2))
+plt.yticks(range(2))
+plt.xlabel('Input 1')
+plt.ylabel('Input 2')
+plt.title('Output of the XOR function over 2 inputs')
+plt.legend()
+plt.grid(True)
+
+plt.show()
