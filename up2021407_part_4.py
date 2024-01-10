@@ -1,5 +1,7 @@
 import numpy as np
 
+# This code does not work, it does not provide a correct output.
+
 # ReLU function for activation
 def relu(x):
     return np.maximum(0, x)
@@ -10,7 +12,7 @@ def relu_derivative(x):
 
 class SingleLayerNN(object):
     def __init__(self, input_size, output_size):
-        # Initialize weights randomly with mean 0
+        # Initialise weights randomly with mean 0
         self.synaptic_weights = 2 * np.random.random((input_size, output_size)) - 1
 
     def train(self, training_inputs, training_outputs, iterations):
@@ -38,7 +40,7 @@ nn = SingleLayerNN(input_size=3, output_size=1)
 nn.train(training_inputs, training_outputs, 10000)
 
 # Test data
-test_inputs = np.array([[1,1,0], [0,0,0], [1,0,0]])
+test_inputs = np.array([[1,0,1], [0,0,0], [1,0,0]])
 test_outputs = nn.forward(test_inputs)
 
 # Display results
