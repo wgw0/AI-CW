@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 # Function to load CIFAR-10 dataset
 def load_cifar10():
     # Open the CIFAR-10 data file in binary read ('rb') mode
-    with open('data_batch_1', 'rb') as fo:
+    with open('cifar-10/data_batch_1', 'rb') as fo:
         # Load the data from the file using pickle and decode it using 'bytes' encoding
         data = pickle.load(fo, encoding='bytes')
     # Return the loaded data
