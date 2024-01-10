@@ -73,7 +73,8 @@ def genetic_algorithm(target, population_size=100, chromosome_length=32, mutatio
         # Find and print the best fitness in this generation.
         best_chromosome = max(population, key=lambda chromosome: fitness(chromosome, target))
         best_fitness = fitness(best_chromosome, target)
-        print(f"Generation {generation}: Best Fitness = {best_fitness}")
+        # Print the generation count, the fitness of the generation and the best chromosone from that gen.
+        print(f"Generation {generation}: Best Fitness = {best_fitness}, Best Chromosome = {best_chromosome}")
 
         # Check for the optimal solution.
         if any(fitness(chromosome, target) == chromosome_length for chromosome in population):
