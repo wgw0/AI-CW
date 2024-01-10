@@ -1,5 +1,4 @@
 import random
-import math
 
 def create_population(size, chromosome_length):
     # Creates an initial population of chromosomes.
@@ -8,20 +7,21 @@ def create_population(size, chromosome_length):
 
 def fitness(chromosome, target):
     # Fitness function.
-    # Compares the chromosome to the target and counts the number of matching bits.
+    # Compares each bit of the chromosome to the target and counts the number of matching bits.
     # The higher the count, the better the fitness.
     return sum(chromosome_bit == target_bit for chromosome_bit, target_bit in zip(chromosome, target))
 
 def roulette_wheel_selection(population, fitness_scores):
     # Roulette wheel selection process.
-    # Selects parents with probabilities proportional to their fitness scores.
+    # Selects parents for the next generation with probabilities proportional to their fitness scores.
+    # The higher the fitness score, the higher the chance of being selected.
 
-    # Normalize the fitness scores to sum up to 1.
+    # Normalise the fitness scores to sum up to 1.
     total_fitness = sum(fitness_scores)
-    normalized_fitness = [f / total_fitness for f in fitness_scores]
+    normalised_fitness = [f / total_fitness for f in fitness_scores]
 
     # Calculate cumulative fitness for selection.
-    cumulative_fitness = [sum(normalized_fitness[:i+1]) for i in range(len(normalized_fitness))]
+    cumulative_fitness = [sum(normalised_fitness[:i+1]) for i in range(len(normalised_fitness))]
 
     # Select parents based on the cumulative fitness.
     selected_parents = []
@@ -35,21 +35,25 @@ def roulette_wheel_selection(population, fitness_scores):
 
 def crossover(parent1, parent2):
     # Crossover operation.
-    # Creates a child by combining parts of both parents' chromosomes.
+    # Creates a child by combining parts of both parents' chromosomes at a random point.
     crossover_point = random.randint(1, len(parent1) - 1)
     return parent1[:crossover_point] + parent2[crossover_point:]
 
 def mutate(chromosome, mutation_rate):
     # Mutation operation.
     # Flips random bits in the chromosome based on the mutation rate.
+    # This introduces genetic diversity and helps prevent premature convergence.
     return ''.join(bit if random.random() > mutation_rate else '0' if bit == '1' else '1' for bit in chromosome)
 
 def genetic_algorithm(target, population_size=100, chromosome_length=32, mutation_rate=0.01, max_generations=1000):
     # Main Genetic Algorithm function.
     # Evolves the population over several generations to reach the target chromosome.
+    # Steps include creating an initial population, evaluating fitness, selecting parents, crossover, and mutation.
 
     # Create initial population.
     population = create_population(population_size, chromosome_length)
+    # print("Initial Population:") THESE CAN BE UNCOMMENTED TO DEMONSTRATE THE INITIAL POP
+    # print(population)
 
     for generation in range(max_generations):
         # Calculate fitness for each chromosome in the population.
@@ -74,6 +78,8 @@ def genetic_algorithm(target, population_size=100, chromosome_length=32, mutatio
         # Check for the optimal solution.
         if any(fitness(chromosome, target) == chromosome_length for chromosome in population):
             print(f"Optimal solution found in generation {generation}")
+            # print("Final Population:") THESE CAN BE UNCOMMENTED TO DEMONSTRATE THE FINAL POP
+            # print(population)
             break
     else:
         print("Optimal solution not found")
