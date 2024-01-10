@@ -16,6 +16,8 @@ class Full_NN(object):
         self.Y=Y  #outputs
         #we are setting up some class variables for our inputs. 
 
+        # Here the Neural Network is comprised of two layers as set out in the following code
+
         L=[X]+HL+[Y]  #total number of layers. This creates a representation of the
                     #the network in the format we need it. i.e array of the format [how many inputs, how mnay hidden layers. how many outputs]  
 
@@ -109,6 +111,8 @@ class Full_NN(object):
             W=self.W[i]        
             Der=self.Der[i]
             W+= Der*lr      #update the weights by applying the learning rate 
+
+    # I have altered the code here to utilise a ReLU activiation function instead of a sigmoid
 
     def ReLU(self, x):
         # ReLU activation function

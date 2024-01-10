@@ -15,6 +15,8 @@ class Full_NN(object):
         self.Y=Y  #outputs
         #we are setting up some class variables for our inputs. 
 
+        # I have altered the code in this function to ensure it is only one layer.
+
         L=[X]+[Y]  #total number of layers. This creates a representation of the
                     #the network in the format we need it. i.e array of the format [how many inputs, how mnay hidden layers. how many outputs]  
 
