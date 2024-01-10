@@ -18,7 +18,7 @@ def or_perceptron(x):
 
 # XOR Perceptron Attempt
 # Implementing a perceptron for XOR with arbitrary weights and bias.
-# Note: There's no set of weights and bias that will make this work for XOR as it's not linearly separable.
+# Note: There's no set of weights and biases that will make this work for XOR as it's not linearly separable.
 def xor_perceptron(x):
     return perceptron(unit_step, x, [1, 1], -0.5)
 

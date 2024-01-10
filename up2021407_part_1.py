@@ -10,10 +10,11 @@ def fitness(chromosome, target):
     # Compares each bit of the chromosome to the target and counts the number of matching bits.
     # The higher the count, the better the fitness.
     return sum(chromosome_bit == target_bit for chromosome_bit, target_bit in zip(chromosome, target))
+    
 
 def roulette_wheel_selection(population, fitness_scores):
     # Roulette wheel selection process.
-    # Selects parents for the next generation with probabilities proportional to their fitness scores.
+    # Select parents for the next generation with probabilities proportional to their fitness scores.
     # The higher the fitness score, the higher the chance of being selected.
 
     # Normalise the fitness scores to sum up to 1.
