@@ -62,5 +62,7 @@ test_outputs = nn.forward(test_inputs)
 # Print the test data and the corresponding predictions from the network.
 print("Test Inputs:")
 print(test_inputs)
+print("Target Outputs")
+print()
 print("Test Outputs (Predictions):")
 print(test_outputs)

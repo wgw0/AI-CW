@@ -52,7 +52,7 @@ def genetic_algorithm(target, population_size=100, chromosome_length=32, mutatio
 
     # Create initial population.
     population = create_population(population_size, chromosome_length)
-    # print("Initial Population:") THESE CAN BE UNCOMMENTED TO DEMONSTRATE THE INITIAL POP
+    # print("Initial Population:") #THESE CAN BE UNCOMMENTED TO DEMONSTRATE THE INITIAL POP
     # print(population)
 
     for generation in range(max_generations):
@@ -78,7 +78,7 @@ def genetic_algorithm(target, population_size=100, chromosome_length=32, mutatio
         # Check for the optimal solution.
         if any(fitness(chromosome, target) == chromosome_length for chromosome in population):
             print(f"Optimal solution found in generation {generation}")
-            # print("Final Population:") THESE CAN BE UNCOMMENTED TO DEMONSTRATE THE FINAL POP
+            # print("Final Population:") #THESE CAN BE UNCOMMENTED TO DEMONSTRATE THE FINAL POP
             # print(population)
             break
     else:

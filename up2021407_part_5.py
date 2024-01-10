@@ -1,37 +1,35 @@
+import pickle
 import numpy as np
-from sklearn.linear_model import LogisticRegression
-from keras.datasets import cifar10
 import matplotlib.pyplot as plt
 
+# Function to load CIFAR-10 dataset
+def load_cifar10():
+    with open('cifar-10/data_batch_1', 'rb') as fo:
+        data = pickle.load(fo, encoding='bytes')
+    return data
+
 # Load CIFAR-10 dataset
-(train_images, train_labels), (test_images, test_labels) = cifar10.load_data()
+cifar_data = load_cifar10()
 
-# Flatten the images
-train_images_flattened = train_images.reshape(train_images.shape[0], -1)
-test_images_flattened = test_images.reshape(test_images.shape[0], -1)
+# Choose a random image index
+random_index = np.random.randint(0, cifar_data[b'data'].shape[0])
 
-# Convert labels to 1D array
-train_labels = train_labels.ravel()
-test_labels = test_labels.ravel()
+# Get the image and its corresponding label
+image = cifar_data[b'data'][random_index].reshape(3, 32, 32).transpose(1, 2, 0)
+label = cifar_data[b'labels'][random_index]
 
-# Initialize a Logistic Regression model (a simple linear classifier)
-model = LogisticRegression(max_iter=100, solver='saga', multi_class='multinomial')
+# CIFAR-10 class names
+class_names = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
-# Train the model on a subset of the training data for demonstration
-model.fit(train_images_flattened[:1000], train_labels[:1000])
+# Display the image as a graph
+plt.figure(figsize=(8, 8))
 
-# Access the learned templates (weights)
-templates = model.coef_
+# Plotting the R, G, B channels separately
+for i in range(3):
+    plt.subplot(1, 3, i + 1)
+    plt.imshow(image[:,:,i], cmap='gray')
+    plt.title(f"Channel {i + 1}")
+    plt.axis('off')
 
-# Reshape and visualize the templates
-# Each class has a template, reshape them to the original image size
-num_classes = 10
-fig, axes = plt.subplots(1, num_classes, figsize=(20, 2))
-for i in range(num_classes):
-    ax = axes[i]
-    template = templates[i].reshape(32, 32, 3)
-    ax.imshow(template)
-    ax.axis('off')
-    ax.set_title(f'Class {i}')
-
+plt.suptitle(f"Label: {class_names[label]}", y=0.92)
 plt.show()
