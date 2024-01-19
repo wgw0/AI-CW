@@ -84,7 +84,14 @@ class Full_NN(object):
             Er=np.dot(D, self.W[i].T)   #this is the trick, as this essentially back propagates the next error we need for the next iteration. This error term
                                         # is part of the dE/DWi equation for the next layer down in the back propagation, and we pass it on after calculating it in this iteration. 
 
-            
+            # THESE PRINT STATEMENTS CAN BE UNCOMMENTED TO DEMONSTRATE THE ACTION OF BACK PROPAGATION
+            # if i == len(self.Der) - 1 or i == 0:
+            #     print(f"Back Propagation at Layer {i+1}")
+            #     print(f"Output: {out}")
+            #     print(f"Delta: {D}")
+            #     print(f"Derivative Update: {self.Der[i]}")
+            #     print(f"Error for Next Layer: {Er}")
+            #     print("---------------------------------------------------")
 
     def train_nn(self, x, target, epochs, lr):   #training the network. The x is an array, the target is an array the epochs is a number and the lr is a number. 
 
@@ -104,6 +111,14 @@ class Full_NN(object):
                 self.GD(lr)     #Do gradient descent 
 
                 S_errors+=self.msqe(t,output)   #update the overall error to show the user. 
+
+            # THESE PRINT STATEMENTS CAN BE UNCOMMENTED TO DEMONSTRATE THE ACTION OF BACK PROPAGATION
+            #     if (i == 0 and j == 0) or (i == epochs - 1 and j == len(x) - 1): 
+            #         print(f"Epoch {i+1}, Sample {j+1}: Target: {t}, Predicted: {output}, Error: {e}")
+
+            # if i == 0 or i == epochs - 1:
+            #     print(f"Epoch {i+1} Mean Squared Error: {S_errors / len(x)}")
+            #     print("===================================================")
 
     def GD(self, lr=0.05):    #Gradient descent 
 
@@ -130,7 +145,7 @@ class Full_NN(object):
     
 if __name__ == "__main__":   #Test what we have done 
 
-    training_inputs = np.array([[random()/2 for _ in range(2)] for _ in range(1000)])  #this creates a training set of inputs
+    training_inputs = np.array([[random()/2 for _ in range(2)] for _ in range(10)])  #this creates a training set of inputs
     targets = np.array([[i[0] * i[1]] for i in training_inputs])     #this creates a training set of outputs
         
     nn=Full_NN(2, [5, 5], 1)   #creates a NN with 2 inputs, 2 hidden layers and 1 ouput
